@@ -1,0 +1,6 @@
+.post{
+    padding-top: 10px;
+}
+div .text-start {
+    color: var(--post-color);
+}
