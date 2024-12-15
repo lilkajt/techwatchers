@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 interface WeatherForecast {
   date: string;
   temperatureC: number;
@@ -14,14 +13,19 @@ interface WeatherForecast {
   standalone: false,
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   public forecasts: WeatherForecast[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private elementRef: ElementRef) {}
 
   ngOnInit() {
     this.getForecasts();
   }
+
+  ngAfterViewInit() {
+    this.elementRef.nativeElement.ownerDocument
+        .body.style.backgroundColor = 'var(--background-color)';
+}
 
   getForecasts() {
     this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
