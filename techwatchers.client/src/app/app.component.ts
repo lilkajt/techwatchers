@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { HomeComponent } from './home/home.component';
+
 interface WeatherForecast {
   date: string;
   temperatureC: number;
