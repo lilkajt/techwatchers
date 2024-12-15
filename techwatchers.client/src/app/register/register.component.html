@@ -1,0 +1,38 @@
+<div class="container mb-5 d-flex flex-column justify-content-center align-items-center">
+    <img src="../../../public/logo200x200 (1).png">
+</div>
+
+<div class="container d-flex flex-column justify-content-center align-items-center" style="height: 50vh;">
+    <div class="card p-4 shadow" style="width: 25rem; border-radius: 10px;">
+        <h2 class="text-center mb-4">Tworzenie konta</h2>
+        <form action="">
+            <div class="mb-3">
+                <label for="username" class="form-label">Nazwa użytkownika</label>
+                <input type="text" class="form-control" id="username" placeholder="Wprowadź nazwę użytkownika">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Adres email</label>
+                <input type="text" class="form-control" id="email" placeholder="Wprowadź adres email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label d-flex justify-content-between">
+                    <span>Hasło</span>
+                </label>
+                <input type="password" class="form-control" id="password" placeholder="Wprowadź hasło">
+            </div>
+            <div class="mb-3">
+                <label for="repeatPassword" class="form-label d-flex justify-content-between">
+                    <span>Powtórz hasło</span>
+                </label>
+                <input type="password" class="form-control" id="repeatPassword" placeholder="Powtórz hasło">
+            </div>
+            <div class="mb-3 form-check d-flex align-items-center gap-2">
+                <input class="form-check-input" type="checkbox" id="statute">
+                <label for="statute" class="form-check-label mb-0">
+                    Akceptuję regulamin użytkowania portalu TechWatchers.
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Utwórz konto</button>
+        </form>
+    </div>
+</div>
