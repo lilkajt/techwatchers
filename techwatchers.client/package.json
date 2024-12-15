@@ -24,6 +24,7 @@
     "bootstrap": "^5.3.3",
     "jest-editor-support": "*",
     "jquery": "^3.7.1",
+    "ng-multiselect-dropdown": "^1.0.0",
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

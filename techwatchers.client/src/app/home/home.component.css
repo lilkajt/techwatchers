@@ -1,6 +1,29 @@
 .post{
-    padding-top: 10px;
+    padding: 10px;
 }
+.post.rounded:hover{
+    cursor: pointer;
+    background: #fff;
+    background-color: var(--secondary-color);
+}
+
 div .text-start {
     color: var(--post-color);
+}
+.container-lg.main{
+    padding: 0;
+}
+
+@media (min-width: 992px) {
+    .post {
+        padding: 10px 0;
+    }
+    .post.rounded{
+        padding: 10px;
+    }
+}
+
+.modal-content{
+    background-color: var(--background-color);
+    color: #fff;
 }
