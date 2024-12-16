@@ -24,3 +24,8 @@ input:focus {
     box-shadow: none;
     color: white;
 }
+
+input:checked{
+    background-color: var(--background-color);
+    border: 2px solid var(--secondary-color);
+}
