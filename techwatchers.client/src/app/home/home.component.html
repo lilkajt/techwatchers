@@ -60,11 +60,21 @@
   <div class="modal fade" id="createPostModal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen-lg-down">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header border-bottom border-dark">
           <h1 class="modal-title fs-5" id="modalLabel">Stwórz post</h1>
         </div>
         <div class="modal-body">
-            <form>
+            <form action="">
+                <div class="mb-3">
+                    <div class="form-group">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Wybierz kategorie</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="mb-4">
                     <div class="form-group">
                         <label for="inputTitle">Tytuł</label>
@@ -77,21 +87,13 @@
                         <textarea class="form-control" id="textareaFormControl" rows="3"></textarea>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <div class="form-group">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Wybierz kategorie</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+                <div class="modal-footer border-top border-dark">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                        <button type="submit" class="btn btn-success">Publikuj</button>
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-          <button type="button" class="btn btn-primary">Publikuj</button>
         </div>
       </div>
     </div>
