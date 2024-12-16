@@ -41,14 +41,28 @@ select:focus, input:focus, textarea:focus {
     }
 }
 
-@media (max-width: 670px) {
-    .col-6{
-        width: 100%;
+
+@media (max-width: 1100px) {
+    .modal-footer>button{
+        --bs-btn-padding-y: 0.4rem;
+        --bs-btn-padding-x: 1rem;
+        --bs-btn-font-size: 1rem;
+        --bs-btn-border-radius: var(--bs-border-radius-lg);
     }
-    div.col-6>button{
-        --bs-btn-padding-y: 0.5rem;
+}
+
+@media (max-width: 800px) {
+    .modal-footer>button{
+        --bs-btn-padding-y: 0.7rem;
         --bs-btn-padding-x: 1rem;
         --bs-btn-font-size: 1.25rem;
         --bs-btn-border-radius: var(--bs-border-radius-lg);
+        width: 45%;
+    }
+}
+
+@media (min-width: 800px) {
+    .modal-footer>button{
+        width: 35%;
     }
 }
