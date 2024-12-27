@@ -1,5 +1,4 @@
-<div class="container">
-    <!-- tutaj bedzie for z loopka kazdego wpisu sortowanego od ostatniego limit X -->
+<!-- <div class="container">
     <div class="post container border-bottom border-dark">
         <div class="text-start">
             <p class="fs-6 text">kategoria • user • time</p>
@@ -29,5 +28,16 @@
         <div class="image">
             <img src="" alt="" srcset="">
         </div>
+    </div>
+</div> -->
+
+<div *ngFor="let post of posts()" class="post container border-bottom border-dark">
+    <div class="text-start">
+        <p class="fs-6 text">{{ post.category.name }} • {{ post.user.username }} • {{ post.dateCreation | date:'short' }}</p>
+        <p class="fs-1 text">{{ post.title }}</p>
+        <p class="fs-6 text">{{ post.description }}</p>
+    </div>
+    <div class="image">
+        <img src="" alt="" srcset="">
     </div>
 </div>

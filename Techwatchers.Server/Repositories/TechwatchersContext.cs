@@ -6,6 +6,7 @@ public class TechwatchersContext : DbContext
     {
     }
 
+    public DbSet<Post> Posts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(entity =>
