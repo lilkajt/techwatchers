@@ -1,16 +1,25 @@
-<div *ngFor="let post of posts()" class="post container border-bottom border-dark">
-    <div class="text-start">
-        <p class="fs-6 text">{{ post.category.name }} • {{ post.user.username }} • {{ post.dateCreation | date:'short' }}</p>
-        <p class="fs-1 text">{{ post.title }}</p>
-        <p class="fs-6 text">{{ post.description }}</p>
-    </div>
-    <div class="image">
-        <img src="" alt="" srcset="">
+<div *ngFor="let post of posts()" class="container-lg main">
+    <div class="post border-bottom border-dark">
+        <div class="post rounded">
+            <div class="text-start">
+                <div class="d-flex gap-2">
+                    <p class="fs-5 text">{{ post.user.username }}</p>
+                    <p class="fs-5 text">•</p>
+                    <p class="fs-5 text">{{ post.dateCreation | date:'short' }}</p>
+                </div>
+                <p class="fs-6 text">{{ post.category.name }}</p>
+                <p class="fs-1 text">{{ post.title }}</p>
+                <p class="fs-6 text">{{ post.description }}</p>
+            </div>
+            <div class="image">
+                <img src="" alt="" srcset="">
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createPostModal">
+<button type="button" class="btn btn-secondary" style="--bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: 1.25rem;" data-bs-toggle="modal" data-bs-target="#createPostModal">
     modal
   </button>
   
@@ -45,11 +54,9 @@
                         <textarea class="form-control" id="textareaFormControl" rows="3"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer border-top border-dark">
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-                        <button type="submit" class="btn btn-success">Publikuj</button>
-                    </div>
+                <div class="modal-footer border-top border-dark flex-row-reverse justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-success">Publikuj</button>
                 </div>
             </form>
         </div>
