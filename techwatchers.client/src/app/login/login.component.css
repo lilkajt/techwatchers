@@ -23,11 +23,3 @@ input:focus {
 a{
     color: var(--green-color);
 }
-
-.text-success {
-    color: green;
-}
-  
-.text-danger {
-    color: red;
-}
