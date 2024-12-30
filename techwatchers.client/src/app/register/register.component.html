@@ -5,34 +5,80 @@
 <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 50vh;">
     <div class="card p-4 shadow" style="width: 25rem; border-radius: 10px;">
         <h2 class="text-center mb-4">Tworzenie konta</h2>
-        <form action="">
+        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
             <div class="mb-3">
                 <label for="username" class="form-label">Nazwa użytkownika</label>
-                <input type="text" class="form-control" id="username" placeholder="Wprowadź nazwę użytkownika">
+                <input type="text" class="form-control" id="username" placeholder="Wprowadź nazwę użytkownika" name="username"
+                [(ngModel)]="registerData.username"
+                required 
+                #username="ngModel" 
+                pattern="^[A-Za-z0-9_]{3,}$"
+                >
+                <div *ngIf="username.errors && (username.dirty || username.touched)">
+                    <small *ngIf="username.errors['required']" class="text-danger text-center">Nazwa użytkownika jest wymagana.</small>
+                    <small *ngIf="username.errors['pattern']" class="text-danger text-center">
+                        Nazwa użytkownika musi zawierać tylko litery, cyfry i podkreślniki.<br/>Brak spacji oraz specjalnych znaków.<br/>Nazwa musi być conajmiej 4 znaki długa.
+                    </small>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Adres email</label>
-                <input type="text" class="form-control" id="email" placeholder="Wprowadź adres email">
+                <input type="text" class="form-control" id="email" placeholder="Wprowadź adres email"
+                name="email"
+                [(ngModel)]="registerData.email"
+                required
+                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                #email="ngModel">
+                <div *ngIf="email.errors && (email.dirty || email.touched)">
+                    <small *ngIf="email.errors['required']" class="text-danger text-center">Adres email jest wymagany.</small>
+                    <small *ngIf="email.errors['pattern']" class="text-danger text-center">Wprowadź poprawny adres email.</small>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label d-flex justify-content-between">
                     <span>Hasło</span>
                 </label>
-                <input type="password" class="form-control" id="password" placeholder="Wprowadź hasło">
+                <input type="password" class="form-control" id="password" placeholder="Wprowadź hasło" name="password" [(ngModel)]="registerData.password" required #password="ngModel" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+                <div *ngIf="password.errors && (password.dirty || password.touched)">
+                    <small *ngIf="password.errors['required']" class="text-danger text-center">
+                        Hasło jest wymagane.
+                    </small>
+                    <small *ngIf="password.errors['pattern']" class="text-danger text-center">
+                      Hasło musi zawierać przynajmniej 1 cyfre, 1 wielką literę oraz 1
+                      znak specjalny.
+                    </small>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="repeatPassword" class="form-label d-flex justify-content-between">
                     <span>Powtórz hasło</span>
                 </label>
-                <input type="password" class="form-control" id="repeatPassword" placeholder="Powtórz hasło">
+                <input type="password" class="form-control" id="repeatPassword" placeholder="Powtórz hasło" name="repeatPassword"
+                [(ngModel)]="registerData.repeatPassword"
+                required
+                [pattern]="registerData.password"
+                #repeatPassword="ngModel">
+                <div *ngIf="repeatPassword.errors && (repeatPassword.dirty || repeatPassword.touched)">
+                    <small *ngIf="repeatPassword.errors['required']" class="text-danger text-center">Powtórzenie hasła jest wymagane.</small>
+                    <small *ngIf="repeatPassword.errors['pattern']" class="text-danger text-center">Hasła muszą się zgadzać.</small>
+                </div>
             </div>
             <div class="mb-3 form-check d-flex align-items-center gap-2">
-                <input class="form-check-input" type="checkbox" id="statute">
+                <input class="form-check-input" type="checkbox" id="statute" name="acceptRules"
+                [(ngModel)]="registerData.acceptRules"
+                required
+                #acceptRules="ngModel">
                 <label for="statute" class="form-check-label mb-0">
                     Akceptuję regulamin użytkowania portalu TechWatchers.
                 </label>
             </div>
-            <button type="submit" class="btn btn-success w-100">Utwórz konto</button>
+            <small *ngIf="acceptRules.invalid && acceptRules.touched" class="text-danger text-center">
+                Musisz zaakceptować regulamin by się zarejestrować.
+            </small>
+            <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">Utwórz konto</button>
         </form>
+        <div *ngIf="message" [ngClass]="{ 'text-success': !isError, 'text-danger': isError }" class="mt-3 text-center">
+            {{ message }}
+        </div>
     </div>
 </div>
