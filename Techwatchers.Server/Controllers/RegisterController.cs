@@ -17,19 +17,27 @@ namespace Techwatchers.Server.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] RegisterRequest request)
         {
-            if (_registerRepository.IsUsernameOrEmailTaken(request.Username, request.Email))
-            {
-                return StatusCode(408,new { message = "Nazwa użytkownika lub email jest juz w użytku." });
-            }
             if (!IsUsernameValid(request.Username)){
-                return BadRequest(new { message = "Nazwa użytkownika musi zawierać co najmniej 3 znaki i składać się z liter, cyfr i podkreślników." });
+                return StatusCode(442,new { message = "Nazwa użytkownika musi zawierać co najmniej 3 znaki i składać się z liter, cyfr i podkreślników." });
             }
             if (!IsEmailValid(request.Email)){
-                return BadRequest(new { message = "Niepoprawny adres email." });
+                return StatusCode(443,new { message = "Niepoprawny adres email." });
             }
             if (!IsPasswordValid(request.Password)){
-                return BadRequest(new { message = "Hasło musi zawierać co najmniej 1 cyfrę, 1 dużą literę, 1 znak specjalny i mieć co najmniej 8 znaków." });
+                return StatusCode(444,new { message = "Hasło musi zawierać co najmniej 1 cyfrę, 1 dużą literę, 1 znak specjalny i mieć co najmniej 8 znaków." });
             }
+            if (!request.Statute){
+                return StatusCode(445,new { message = "Musisz zaakceptować regulamin." });
+            }
+            if (request.Password != request.RepeatPassword){
+                return StatusCode(446,new { message = "Hasła nie są takie same." });
+            }
+            if (_registerRepository.IsUsernameOrEmailTaken(request.Username, request.Email))
+            {
+                return StatusCode(441,new { message = "Nazwa użytkownika lub email jest juz w użytku." });
+            }
+
+
             var hashedPassword = PasswordHasher.HashPassword(request.Password);
             var user = new User
             {
@@ -69,6 +77,7 @@ namespace Techwatchers.Server.Controllers
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string RepeatPassword { get; set; }
         public bool Statute { get; set; }
     }
 }

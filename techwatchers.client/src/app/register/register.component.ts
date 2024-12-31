@@ -31,17 +31,36 @@ export class RegisterComponent {
 
     this.registerService.register(this.registerData).subscribe(
       (response) => {
+        console.log(response);
         this.isError = false;
         this.message = 'Rejestracja udana!';
-        console.log(response);
         // this.router.navigate(['/dashboard']);
       },
       (error) => {
-        // dodac custom error code w backend zeby wiedziec czy ten uzytkownik juz istnieje
-        // StatusCode(408, "User already exists") -> backend
         console.log(error);
         this.isError = true;
-        this.message = error.status === 400 ? 'Niepoprawne dane!' : 'Coś poszło nie tak. Spróbuj ponownie!';
+        switch (error.status) {
+          case 441:
+            this.message = 'Nazwa użytkownika lub email jest juz w użytku.';
+            break;
+          case 442:
+            this.message = "Nazwa użytkownika musi zawierać co najmniej 3 znaki i składać się z liter, cyfr i podkreślników.";
+            break;
+          case 443:
+            this.message = "Niepoprawny adres email.";
+            break;
+          case 444:
+            this.message = "Hasło musi zawierać co najmniej 1 cyfrę, 1 dużą literę, 1 znak specjalny i mieć co najmniej 8 znaków.";
+            break;
+          case 445:
+            this.message = "Musisz zaakceptować regulamin.";
+            break;
+          case 446:
+            this.message = "Hasła nie są takie same.";
+            break;
+          default:
+            this.message = 'Coś poszło nie tak. Spróbuj ponownie!';
+        }
       }
     );
   }
