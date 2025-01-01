@@ -79,8 +79,7 @@
             <small *ngIf="Statute.invalid && Statute.touched" class="text-danger text-center">
                 Musisz zaakceptować regulamin by się zarejestrować.
             </small>
-            <!-- <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">Utwórz konto</button> -->
-            <button type="submit" class="btn btn-success w-100" >Utwórz konto</button>
+            <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">Utwórz konto</button>
         </form>
         <div *ngIf="message" [ngClass]="{ 'text-success': !isError, 'text-danger': isError }" class="mt-3 text-center">
             {{ message }}
