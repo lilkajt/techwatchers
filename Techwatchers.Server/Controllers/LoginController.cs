@@ -17,12 +17,24 @@ namespace Techwatchers.Server.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            var user = _loginRepository.ValidateUser(request.Username, request.Password);
-
-            if (user == null)
-                return Unauthorized(new { message = "Invalid username or password" });
-
-            return Ok(new { message = "Login successful", user });
+            try
+            {
+                var userPassword = _loginRepository.GetUserPassword(request.Username);
+                if ( userPassword == null) {
+                    return Unauthorized(new { message = "Niepoprawna nazwa użytkownika lub hasło!" });
+                }
+                if (PasswordHasher.VerifyPassword(request.Password, userPassword))
+                {
+                    //musimy zwrocic uzytkownika
+                    var user = _loginRepository.ValidateUser(request.Username, userPassword);
+                    return Ok(new { message = "Login udany!", user });
+                }
+                return Unauthorized(new { message = "Niepoprawna nazwa użytkownika lub hasło!" });
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500, new { message = "Wystąpił błąd!" });
+            }
         }
     }
 

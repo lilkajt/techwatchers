@@ -16,10 +16,14 @@ export class LoginComponent {
   onSubmit(){
     console.log('Form submitted:', this.loginData);
     
+    if ( this.removeWhitespacesAndValidate(this.loginData.username) || this.removeWhitespacesAndValidate(this.loginData.password)) {
+      return;
+    }
+
     this.loginService.login(this.loginData).subscribe(
       (response) => {
         this.isError = false;
-        this.message = 'Login successful!';
+        this.message = 'Login udany!';
         console.log(response);
         // this.router.navigate(['/dashboard']);
       },
@@ -27,11 +31,21 @@ export class LoginComponent {
         console.log(error);
         this.isError = true;
         if (error.status === 401) {
-          this.message = 'Invalid username or password!';
+          this.message = 'Niepoprawna nazwa użytkownika lub hasło!';
         } else {
-          this.message = 'An unexpected error occurred!';
+          this.message = 'Coś poszło nie tak. Spróbuj ponownie!';
         }
       }
     );
+  }
+
+  removeWhitespacesAndValidate(data: string): boolean {
+    const trimmedData = data.replace(/\s+/g, '');
+    if (trimmedData === '') {
+      this.isError = true;
+      this.message = 'Wszystkie pola są wymagane!';
+      return true;
+    }
+    return false;
   }
 }

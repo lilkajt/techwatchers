@@ -8,14 +8,31 @@
         <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
             <div class="mb-3">
                 <label for="username" class="form-label">Nazwa użytkownika</label>
-                <input type="text" class="form-control" id="username" placeholder="Wprowadź nazwę użytkownika" name="username" [(ngModel)]="loginData.username" required>    
+                <input type="text" class="form-control" id="username"
+                placeholder="Wprowadź nazwę użytkownika"
+                name="username"
+                [(ngModel)]="loginData.username"
+                required
+                #username="ngModel" 
+                pattern="^[A-Za-z0-9_]+$"
+                >
+                <div *ngIf="username.errors && (username.dirty || username.touched)">
+                    <small *ngIf="username.errors['required']" class="text-danger text-center">Nazwa użytkownika jest wymagana.</small>
+                    <small *ngIf="username.errors['pattern']" class="text-danger text-center">
+                        Nazwa użytkownika musi zawierać tylko litery, cyfry i podkreślniki.<br/>Brak spacji oraz specjalnych znaków.
+                    </small>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label d-flex justify-content-between">
                     <span>Hasło</span>
                     <a href="#" class="text-decoration-none">Zapomniałeś hasła?</a>
                 </label>
-                <input type="password" class="form-control" id="password" placeholder="Wprowadź hasło" name="password" [(ngModel)]="loginData.password" required>
+                <input type="password" class="form-control" id="password" placeholder="Wprowadź hasło"
+                name="password"
+                [(ngModel)]="loginData.password"
+                required
+                >
             </div>
             <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">Zaloguj</button>
         </form>
