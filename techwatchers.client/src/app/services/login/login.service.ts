@@ -9,10 +9,15 @@ import { Observable } from 'rxjs';
 export class LoginService {
 
   private apiUrl = `${environment.apiUrl}/login`;
+  private logoutApiUrl = `${environment.apiUrl}/logout`;
   
     constructor(private http: HttpClient) { }
 
     login(data: any): Observable<any> {
       return this.http.post(this.apiUrl, data);
+    }
+
+    logout(): Observable<any> {
+      return this.http.post(this.logoutApiUrl, {});
     }
 }

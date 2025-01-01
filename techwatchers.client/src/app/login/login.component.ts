@@ -13,22 +13,21 @@ export class LoginComponent {
   isError: boolean = false;
   constructor( private loginService: LoginService) { }
 
-  onSubmit(){
+  onSubmit() {
     console.log('Form submitted:', this.loginData);
     
-    if ( this.removeWhitespacesAndValidate(this.loginData.username) || this.removeWhitespacesAndValidate(this.loginData.password)) {
+    if (this.removeWhitespacesAndValidate(this.loginData.username) || this.removeWhitespacesAndValidate(this.loginData.password)) {
       return;
     }
 
-    this.loginService.login(this.loginData).subscribe(
-      (response) => {
+    this.loginService.login(this.loginData).subscribe({
+      next: (response) => {
         this.isError = false;
         this.message = 'Login udany!';
-        console.log(response);
         // this.router.navigate(['/dashboard']);
       },
-      (error) => {
-        console.log(error);
+      error: (error) => {
+        console.error('Login failed:', error);
         this.isError = true;
         if (error.status === 401) {
           this.message = 'Niepoprawna nazwa użytkownika lub hasło!';
@@ -36,7 +35,23 @@ export class LoginComponent {
           this.message = 'Coś poszło nie tak. Spróbuj ponownie!';
         }
       }
-    );
+    });
+  }
+
+  logout() {
+    this.loginService.logout().subscribe({
+      next: () => {
+        console.log('Logout successful');
+        this.isError = false;
+        this.message = 'Wylogowanie udane!';
+        // this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout failed:', error);
+        this.isError = true;
+        this.message = 'Wylogowanie nieudane. Spróbuj ponownie!';
+      }
+    });
   }
 
   removeWhitespacesAndValidate(data: string): boolean {

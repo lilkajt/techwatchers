@@ -18,6 +18,9 @@ namespace Techwatchers.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
+            //dodac var session=HttpContext.Session.GetId("SessionId");
+            //cos takiego zeby sprawdzic czy user jest zalogowany
+            //jesli tak to przekazuje id do frontu zeby moc potem wczytac na front odopwiedniego zalgowanego usera
             var posts = await _postRepository.GetPostsAsync();
 
             return Ok(posts);

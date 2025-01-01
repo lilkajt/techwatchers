@@ -27,6 +27,7 @@ namespace Techwatchers.Server.Controllers
                 {
                     //musimy zwrocic uzytkownika
                     var user = _loginRepository.ValidateUser(request.Username, userPassword);
+                    HttpContext.Session.SetInt32("username", user.id);
                     return Ok(new { message = "Login udany!", user });
                 }
                 return Unauthorized(new { message = "Niepoprawna nazwa użytkownika lub hasło!" });
@@ -36,6 +37,20 @@ namespace Techwatchers.Server.Controllers
                 return StatusCode(500, new { message = "Wystąpił błąd!" });
             }
         }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            try
+            {
+                HttpContext.Session.Clear();
+                return Ok(new { message = "Wylogowano!" });
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500, new { message = "Wystąpił błąd!" });
+            }
+        }   
     }
 
     public class LoginRequest
