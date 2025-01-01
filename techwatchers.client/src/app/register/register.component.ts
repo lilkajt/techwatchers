@@ -9,7 +9,7 @@ import { RegisterService } from '../services/register/register.service';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  registerData = {email: '', username: '', password: '', repeatPassword: '', acceptRules: false};
+  registerData = {email: '', username: '', password: '', repeatPassword: '', Statute: false};
   message: string = '';
   isError: boolean = false;
   constructor( private registerService: RegisterService) { }
@@ -22,7 +22,11 @@ export class RegisterComponent {
     if ( this.removeWhitespacesAndValidate(this.registerData.username) || this.removeWhitespacesAndValidate(this.registerData.email) || this.removeWhitespacesAndValidate(this.registerData.password) || this.removeWhitespacesAndValidate(this.registerData.repeatPassword)) {
       return;
     }
-
+    if (!this.registerData.Statute) {
+      this.isError = true;
+      this.message = 'Musisz zaakceptować regulamin.';
+      return;
+    }
     if (this.registerData.password !== this.registerData.repeatPassword) {
       this.isError = true;
       this.message = 'Hasła nie są identyczne.';
@@ -34,6 +38,7 @@ export class RegisterComponent {
         console.log(response);
         this.isError = false;
         this.message = 'Rejestracja udana!';
+
         // this.router.navigate(['/dashboard']);
       },
       (error) => {

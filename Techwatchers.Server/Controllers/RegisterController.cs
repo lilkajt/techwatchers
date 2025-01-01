@@ -54,7 +54,7 @@ namespace Techwatchers.Server.Controllers
         private bool IsPasswordValid(string password)
         {
             // Regex: At least 1 digit, 1 uppercase letter, 1 special character, and 8+ characters
-            var passwordRegex = new System.Text.RegularExpressions.Regex(@"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
+            var passwordRegex = new System.Text.RegularExpressions.Regex(@"^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$");
             return passwordRegex.IsMatch(password);
         }
         private bool IsUsernameValid(string username)
