@@ -20,7 +20,6 @@ export class HomeComponent {
 
   loadPosts(): void {
     this.postService.getPosts().subscribe((data: Post[]) => {
-      console.log(data);
       this.posts.set(data);
     });
   }
