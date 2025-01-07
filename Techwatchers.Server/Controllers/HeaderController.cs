@@ -24,11 +24,6 @@ namespace Techwatchers.Server.Controllers
             request.Title = TrimSpaces(request.Title);
             request.Description = TrimSpaces(request.Description);
 
-            // test co wypisuje podczas dodawania posta
-            Console.WriteLine(request.Title);
-            Console.WriteLine(request.Description);
-            Console.WriteLine(request.CategoryId);
-            Console.WriteLine(request.UserId);
             if (string.IsNullOrEmpty(request.Title) || string.IsNullOrEmpty(request.Description))
             {
                 return StatusCode(440,"Tytuł i opis jest wymagany.");
