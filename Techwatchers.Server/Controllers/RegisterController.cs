@@ -20,6 +20,7 @@ namespace Techwatchers.Server.Controllers
             if (!IsUsernameValid(request.Username)){
                 return StatusCode(442,new { message = "Nazwa użytkownika musi zawierać co najmniej 3 znaki i składać się z liter, cyfr i podkreślników." });
             }
+            // tutaj poprawic regex
             if (!IsEmailValid(request.Email)){
                 return StatusCode(443,new { message = "Niepoprawny adres email." });
             }
@@ -66,7 +67,7 @@ namespace Techwatchers.Server.Controllers
         private bool IsEmailValid(string email)
         {
             // Regex to ensure a valid email without whitespace
-            var emailRegex = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+            var emailRegex = new System.Text.RegularExpressions.Regex(@"^[A-Za-z0-9.]+@[A-Za-z0-9]+\.[A-Za-z]+$");
             return emailRegex.IsMatch(email);
         }
 
