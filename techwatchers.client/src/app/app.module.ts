@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoggedHeaderComponent } from './logged-header/logged-header.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { LoggedHeaderComponent } from './logged-header/logged-header.component';
     HomeComponent,
     RegisterComponent,
     LoggedHeaderComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule,

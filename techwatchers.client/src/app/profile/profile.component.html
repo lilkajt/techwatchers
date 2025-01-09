@@ -1,0 +1,49 @@
+<div class="container d-flex flex-column justify-content-center align-items-center mt-5" style="height: 50vh;">
+    <div class="card p-4 shadow" style="width: 25rem; border-radius: 10px;">
+        <h2 class="text-center mb-4 fs-1">Hi {{ userName }}</h2>
+        <span class="text-center mb-3 fs-5">edit your profile</span>
+        <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+            <input type="hidden" [(ngModel)]="profileData.userId" name="userId">
+            <div class="mb-3">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" name="currentPassword"
+                [(ngModel)]="profileData.currentPassword"
+                required
+                #currentPassword="ngModel">
+                <div *ngIf="currentPassword.errors && (currentPassword.dirty || currentPassword.touched)">
+                    <small *ngIf="currentPassword.errors['required']" class="text-danger text-center">Current password is required.</small>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" name="newPassword"
+                [(ngModel)]="profileData.newPassword"
+                required
+                pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$"
+                #newPassword="ngModel">
+                <div *ngIf="newPassword.errors && (newPassword.dirty || newPassword.touched)">
+                    <small *ngIf="newPassword.errors['required']" class="text-danger text-center">New password is required.</small>
+                    <small *ngIf="newPassword.errors['pattern']" class="text-danger text-center">
+                        Password must contain at least 1 digit, 1 uppercase letter, and 1 special character.
+                    </small>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="repeatNewPassword" class="form-label">Repeat New Password</label>
+                <input type="password" class="form-control" id="repeatNewPassword" placeholder="Repeat new password" name="repeatNewPassword"
+                [(ngModel)]="profileData.repeatNewPassword"
+                required
+                [pattern]="profileData.newPassword"
+                #repeatNewPassword="ngModel">
+                <div *ngIf="repeatNewPassword.errors && (repeatNewPassword.dirty || repeatNewPassword.touched)">
+                    <small *ngIf="repeatNewPassword.errors['required']" class="text-danger text-center">Repeating new password is required.</small>
+                    <small *ngIf="repeatNewPassword.errors['pattern']" class="text-danger text-center">Passwords must match.</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success w-100" [disabled]="profileForm.invalid">Update Password</button>
+        </form>
+        <div *ngIf="message" [ngClass]="{ 'text-success': !isError, 'text-danger': isError }" class="mt-3 text-center">
+            {{ message }}
+        </div>
+    </div>
+</div>

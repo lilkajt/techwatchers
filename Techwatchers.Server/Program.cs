@@ -28,6 +28,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IRegisterRepository, RegisterRepository>();
 builder.Services.AddScoped<IHeaderRepository, HeaderRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 builder.Services.AddControllers();
 
