@@ -28,7 +28,6 @@ export class LoggedHeaderComponent {
   
   ngOnInit(): void {
     this.loadCategories();
-    this.showToast("Post opublikowany");
   }
 
   loadCategories(): void {
