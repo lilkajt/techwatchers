@@ -9,7 +9,7 @@ import { ProfileService } from '../services/profile/profile.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  profileData = { userId: 1, currentPassword: '', newPassword: '', repeatNewPassword: '' }; //get userId from session
+  profileData = { userId: 23, currentPassword: '', newPassword: '', repeatNewPassword: '' }; //get userId from session
   message: string = '';
   isError: boolean = false;
   userName: string = 'User'; // Replace with actual user name from session
