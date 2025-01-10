@@ -1,0 +1,101 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <span class="tech">TECH</span><span class="watchers">WATCHERS</span>
+        </a>
+
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home">Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                        create
+                        <span class="fw-bold">+</span>
+                    </button>
+                </li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" routerLink="/profile">Profil</a>
+                </li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" href="#">Wyloguj</a>
+                </li>
+                <li class="nav-item d-none d-lg-block">
+                    <div class="dropdown">
+                        <i class="fa-solid fa-user fa-2x" style="color: #fff"></i>
+                        <ul class="dropdown-menu mt-2 d-flex flex-column">
+                          <li><a class="dropdown-item rounded" routerLink="/profile">Profil</a></li>
+                          <li><a class="dropdown-item rounded" href="#">Wyloguj</a></li>
+                        </ul>
+                    </div>                                  
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Toast large screens-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body fs-6 d-none d-lg-block"></div>
+            <div class="toast-body fs-5 d-lg-none"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="createPostModal" role="dialog" tabindex="-1" aria-labelledby="modalLabel">
+    <div class="modal-dialog modal-fullscreen-lg-down">
+      <div class="modal-content">
+        <div class="modal-header border-bottom border-dark">
+          <h1 class="modal-title fs-5" id="modalLabel">Stwórz post</h1>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="postForm" (ngSubmit)="submitPost()">
+                <div class="mb-3">
+                    <div class="form-group">
+                        <select class="form-select" aria-label="Wybierz kategorie" formControlName="categoryId">
+                            <option value="" disabled selected>Wybierz kategorie</option>
+                            <option *ngFor="let category of categories()" [value]="category.id">
+                                {{category.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="form-group">
+                        <label for="inputTitle">Tytuł</label>
+                        <input type="text" class="form-control" id="inputTitle" formControlName="title">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="form-group">
+                        <label for="textareaFormControl">Opis</label>
+                        <textarea class="form-control" id="textareaFormControl" rows="3" formControlName="description"></textarea>
+                    </div>
+                </div>
+                <div *ngIf="message" [ngClass]="{ 'text-success': !isError, 'text-danger': isError }" class="mt-3 text-center pb-3 fw-medium">
+                    {{ message }}
+                </div>
+                <div class="modal-footer border-top border-dark flex-row-reverse justify-content-center">
+                    <button type="button" id="closeModalButton" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">Anuluj</button>
+                    <button type="submit" class="btn btn-success" >Publikuj</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>

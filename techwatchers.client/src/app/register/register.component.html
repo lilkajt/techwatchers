@@ -27,7 +27,7 @@
                 name="email"
                 [(ngModel)]="registerData.email"
                 required
-                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                pattern="^[A-Za-z0-9.]+@[A-Za-z0-9]+\.[A-Za-z]+$"
                 #email="ngModel">
                 <div *ngIf="email.errors && (email.dirty || email.touched)">
                     <small *ngIf="email.errors['required']" class="text-danger text-center">Adres email jest wymagany.</small>

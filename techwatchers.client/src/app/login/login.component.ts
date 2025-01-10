@@ -20,38 +20,19 @@ export class LoginComponent {
       return;
     }
 
-    this.loginService.login(this.loginData).subscribe({
-      next: (response) => {
+    this.loginService.login(this.loginData).subscribe(
+      (response) => {
+        console.log(response);
         this.isError = false;
-        this.message = 'Login udany!';
+        this.message = response.message;
         // this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Login failed:', error);
         this.isError = true;
-        if (error.status === 401) {
-          this.message = 'Niepoprawna nazwa użytkownika lub hasło!';
-        } else {
-          this.message = 'Coś poszło nie tak. Spróbuj ponownie!';
-        }
+        this.message = error.error.message;
       }
-    });
-  }
-
-  logout() {
-    this.loginService.logout().subscribe({
-      next: () => {
-        console.log('Logout successful');
-        this.isError = false;
-        this.message = 'Wylogowanie udane!';
-        // this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.error('Logout failed:', error);
-        this.isError = true;
-        this.message = 'Wylogowanie nieudane. Spróbuj ponownie!';
-      }
-    });
+    );
   }
 
   removeWhitespacesAndValidate(data: string): boolean {
