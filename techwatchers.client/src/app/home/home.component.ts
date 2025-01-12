@@ -31,7 +31,6 @@ export class HomeComponent {
   checkUserSession() {
     this.appService.checkUser().subscribe(response => {
       this.isLoggedIn = response.isLoggedIn;
-      console.log('User is logged in: ', this.isLoggedIn);
     });
   }
 }
