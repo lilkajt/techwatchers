@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 public interface IPostRepository
 {
-    Task<IEnumerable<Post>> GetPostsAsync();
+    Task<(IEnumerable<Post> posts, int totalCount)> GetPostsAsync(int page, int pageSize);
 }
 
 public class PostRepository : IPostRepository
@@ -14,11 +14,18 @@ public class PostRepository : IPostRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Post>> GetPostsAsync()
+    public async Task<(IEnumerable<Post> posts, int totalCount)> GetPostsAsync(int page, int pageSize)
     {
-        return await _context.Posts
+        // Pobierz całkowitą liczbę postów (do wyświetlenia w paginacji)
+        int totalCount = await _context.Posts.CountAsync();
+
+        // Zastosuj paginację
+        var posts = await _context.Posts
             .Include(p => p.user)
             .Include(p => p.category)
+            .OrderByDescending(p => p.dateCreation) // Sortuj od najnowszych
+            .Skip((page - 1) * pageSize) // Pomijamy elementy z poprzednich stron
+            .Take(pageSize) // Pobieramy określoną liczbę elementów
             .Select(p => new Post
             {
                 id = p.id,
@@ -28,7 +35,9 @@ public class PostRepository : IPostRepository
                 user = p.user,
                 category = p.category
             })
-            .OrderByDescending(p => p.dateCreation)
             .ToListAsync();
+
+        // Zwróć posty oraz całkowitą liczbę elementów
+        return (posts, totalCount);
     }
 }

@@ -1,19 +1,24 @@
 <div *ngFor="let post of posts()" class="container-lg main">
     <div class="post border-bottom border-dark">
-        <div class="post rounded">
-            <div class="text-start">
-                <div class="d-flex gap-2">
-                    <p class="fs-5 text">{{ post.user.username }}</p>
-                    <p class="fs-5 text">•</p>
-                    <p class="fs-5 text">{{ post.dateCreation | date:'short' }}</p>
-                </div>
-                <p class="fs-6 text">{{ post.category.name }}</p>
-                <p class="fs-1 text">{{ post.title }}</p>
-                <p class="fs-6 text">{{ post.description }}</p>
-            </div>
-            <div class="image">
-                <img src="" alt="" srcset="">
-            </div>
+      <div class="post rounded">
+        <div class="text-start">
+          <div class="d-flex gap-2">
+            <p class="fs-5 text">{{ post.user.username }}</p>
+            <p class="fs-5 text">•</p>
+            <p class="fs-5 text">{{ post.dateCreation | date:'short' }}</p>
+          </div>
+          <p class="fs-6 text">{{ post.category.name }}</p>
+          <p class="fs-1 text">{{ post.title }}</p>
+          <p class="fs-6 text">{{ post.description }}</p>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  
+  <!-- Paginacja -->
+  <div class="pagination">
+    <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">Poprzednia</button>
+    <span>Strona {{ currentPage }} z {{ Math.ceil(totalPosts / pageSize) }}</span>
+    <button [disabled]="currentPage === Math.ceil(totalPosts / pageSize)" (click)="changePage(currentPage + 1)">Następna</button>
+  </div>
+  

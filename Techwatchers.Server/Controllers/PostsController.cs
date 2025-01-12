@@ -16,14 +16,29 @@ namespace Techwatchers.Server.Controllers
 
         // GET: api/posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             //dodac var session=HttpContext.Session.GetId("SessionId");
             //cos takiego zeby sprawdzic czy user jest zalogowany
             //jesli tak to przekazuje id do frontu zeby moc potem wczytac na front odopwiedniego zalgowanego usera
-            var posts = await _postRepository.GetPostsAsync();
+            // var posts = await _postRepository.GetPostsAsync();
 
-            return Ok(posts);
-        }
-    }
+            // return Ok(posts);
+            try
+            {
+                var (posts, totalCount) = await _postRepository.GetPostsAsync(page, pageSize);
+
+                return Ok(new
+                {
+                    posts,
+                    totalCount
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetPosts: {ex.Message}");
+                return StatusCode(500, new { message = "Wystąpił błąd podczas pobierania postów." });
+            }
+                }
+            }
 }

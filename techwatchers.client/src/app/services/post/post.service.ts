@@ -13,7 +13,13 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(this.apiUrl);
+  getPosts(page: number, pageSize: number): Observable<{ posts: Post[]; totalCount: number }> {
+    return this.http.get<{ posts: Post[]; totalCount: number }>(`${this.apiUrl}`, {
+      params: {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    });
   }
+  
 }

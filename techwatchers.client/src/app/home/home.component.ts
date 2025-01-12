@@ -14,6 +14,10 @@ export class HomeComponent {
   isLoggedIn = false;
 
   posts = signal<Post[]>([]);
+  Math = Math;
+  currentPage = 1;
+  pageSize = 5;
+  totalPosts = 0;
 
   constructor(private postService: PostService, private appService: AppService) { }
 
@@ -23,8 +27,9 @@ export class HomeComponent {
   }
 
   loadPosts(): void {
-    this.postService.getPosts().subscribe((data: Post[]) => {
-      this.posts.set(data);
+    this.postService.getPosts(this.currentPage, this.pageSize).subscribe((response) => {
+      this.posts.set(response.posts);
+      this.totalPosts = response.totalCount
     });
   }
 
@@ -32,5 +37,10 @@ export class HomeComponent {
     this.appService.checkUser().subscribe(response => {
       this.isLoggedIn = response.isLoggedIn;
     });
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.loadPosts();
   }
 }

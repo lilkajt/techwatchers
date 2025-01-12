@@ -13,6 +13,48 @@ div .text-start {
     padding: 0;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    color: white;
+  }
+  
+  .pagination button {
+    background-color: #28a745; /* Zielony jak przycisk "Logowanie" */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .pagination button:disabled {
+    background-color: #555; /* Przyciemniony szary dla nieaktywnych */
+    cursor: not-allowed;
+    color: lightgrey;
+  }
+  
+  .pagination button:not(:disabled):hover {
+    background-color: #218838; /* Ciemniejszy zielony dla hover */
+    transform: translateY(-2px); /* Subtelny efekt podniesienia */
+  }
+  
+  .pagination button:not(:disabled):active {
+    background-color: #1e7e34; /* Jeszcze ciemniejszy zielony dla kliknięcia */
+    transform: translateY(0); /* Cofnięcie efektu podniesienia */
+  }
+  
+  .pagination-info {
+    font-size: 18px;
+    color: #ccc; /* Jasnoszary tekst dla informacji */
+  }
+  
+
 @media (min-width: 992px) {
     .post {
         padding: 10px 0;
