@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Techwatchers.Server.Controllers
 {
@@ -8,10 +9,12 @@ namespace Techwatchers.Server.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ILoginRepository _loginRepository;
+        private IHttpContextAccessor _httpContextAccessor;
 
-        public LoginController(ILoginRepository loginRepository)
+        public LoginController(ILoginRepository loginRepository, IHttpContextAccessor httpContextAccessor)
         {
             _loginRepository = loginRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost]
@@ -20,14 +23,18 @@ namespace Techwatchers.Server.Controllers
             try
             {
                 var userPassword = _loginRepository.GetUserPassword(request.Username);
-                if ( userPassword == null) {
+                if (userPassword == null)
+                {
                     return Unauthorized(new { message = "Niepoprawna nazwa użytkownika lub hasło!" });
                 }
                 if (PasswordHasher.VerifyPassword(request.Password, userPassword))
                 {
-                    //musimy zwrocic uzytkownika
                     var user = _loginRepository.ValidateUser(request.Username, userPassword);
-                    HttpContext.Session.SetInt32("username", user.id);
+                    var session = _httpContextAccessor.HttpContext.Session;
+
+                    session.SetInt32("id", user.id);
+                    session.SetString("username", user.username);
+
                     return Ok(new { message = "Login udany!", user });
                 }
                 return Unauthorized(new { message = "Niepoprawna nazwa użytkownika lub hasło!" });
@@ -43,14 +50,16 @@ namespace Techwatchers.Server.Controllers
         {
             try
             {
-                HttpContext.Session.Clear();
+                var session = _httpContextAccessor.HttpContext.Session;
+                session.Clear();
                 return Ok(new { message = "Wylogowano!" });
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                return StatusCode(500, new { message = "Wystąpił błąd!" });
+                return StatusCode(500, new { message = "Wystąpił błąd!", details = ex.Message });
             }
-        }   
+        }
+ 
     }
 
     public class LoginRequest

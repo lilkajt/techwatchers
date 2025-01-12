@@ -28,6 +28,7 @@ public class PostRepository : IPostRepository
                 user = p.user,
                 category = p.category
             })
+            .OrderByDescending(p => p.dateCreation)
             .ToListAsync();
     }
 }

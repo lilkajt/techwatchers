@@ -1,2 +1,10 @@
-<app-header></app-header>
+<ng-container *ngIf="isLoggedIn; else guestHeader">
+    <app-logged-header></app-logged-header>
+</ng-container>
+
+<ng-template #guestHeader>
+    <app-header></app-header>
+</ng-template>
+
 <router-outlet></router-outlet>
+  

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../services/profile/profile.service';
+import { AppService } from '../services/app/app.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,13 +9,17 @@ import { ProfileService } from '../services/profile/profile.service';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit{
   profileData = { userId: 23, currentPassword: '', newPassword: '', repeatNewPassword: '' }; //get userId from session
   message: string = '';
   isError: boolean = false;
   userName: string = 'User'; // Replace with actual user name from session
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private appService: AppService) { }
+
+  ngOnInit(): void {
+    this.loadUsername()
+  }
 
   onSubmit() {
     console.log('Form submitted:', this.profileData);
@@ -53,5 +58,16 @@ export class ProfileComponent {
       return true;
     }
     return false;
+  }
+
+  loadUsername(): void {
+    this.appService.checkUser().subscribe(
+      response => {
+        this.userName = response.user.username;
+      },
+      error => {
+        console.error('Error while getting username:', error);
+      }
+    )
   }
 }

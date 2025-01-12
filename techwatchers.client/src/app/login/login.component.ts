@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: false,
@@ -8,9 +9,12 @@ import { LoginService } from '../services/login/login.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loginData = {username: '', password: ''};
-  message: string = '';
-  isError: boolean = false;
+
+  private router = inject(Router);
+
+  public loginData = {username: '', password: ''};
+  public message: string = '';
+  public isError: boolean = false;
   constructor( private loginService: LoginService) { }
 
   onSubmit() {
@@ -25,9 +29,11 @@ export class LoginComponent {
         console.log(response);
         this.isError = false;
         this.message = response.message;
-        // this.router.navigate(['/dashboard']);
+        this.router.navigate(['/home']).then(() => {
+          window.location.href = '/home';
+        });
       },
-      error: (error) => {
+      (error) => {
         console.error('Login failed:', error);
         this.isError = true;
         this.message = error.error.message;

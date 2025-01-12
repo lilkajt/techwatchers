@@ -1,6 +1,6 @@
 <div class="container d-flex flex-column justify-content-center align-items-center mt-5" style="height: 50vh;">
     <div class="card p-4 shadow" style="width: 25rem; border-radius: 10px;">
-        <h2 class="text-center mb-4 fs-1">Cześć, {{ userName }}</h2>
+        <h2 class="text-center mb-4 fs-1">Cześć {{ userName }}!</h2>
         <span class="text-center mb-3 fs-5">edytuj swój profil</span>
         <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
             <input type="hidden" [(ngModel)]="profileData.userId" name="userId">

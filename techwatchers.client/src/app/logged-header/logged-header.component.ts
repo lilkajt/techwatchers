@@ -1,8 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import Toast from 'bootstrap/js/dist/toast';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { HeaderService, PostCreateDTO } from '../services/header/header.service';
 import { Category } from '../models/category.model';
+import { Router } from '@angular/router';
+import { AppService } from '../services/app/app.service';
 
 @Component({
   selector: 'app-logged-header',
@@ -12,6 +14,10 @@ import { Category } from '../models/category.model';
   styleUrl: './logged-header.component.css'
 })
 export class LoggedHeaderComponent {
+
+  private router = inject(Router);
+  private appService = inject(AppService);
+  
   isError: boolean = false;
   message: string = '';
   postForm: FormGroup;
@@ -28,6 +34,18 @@ export class LoggedHeaderComponent {
   
   ngOnInit(): void {
     this.loadCategories();
+    this.checkUserSession();
+  }
+
+  checkUserSession() {
+    this.appService.checkUser().subscribe(
+      response => {
+        this.userId = response.user.id;
+      },
+      error => {
+        console.error('Error checking user session:', error);
+      }
+    );
   }
 
   loadCategories(): void {
@@ -52,6 +70,7 @@ export class LoggedHeaderComponent {
           closeModalButton.click();
           }
           this.showToast(response.message);
+          window.location.reload();
         },
         (error) =>{
           console.log(error);
@@ -85,5 +104,13 @@ export class LoggedHeaderComponent {
       const toastLg = new Toast(toastElementLg);
       toastLg.show();
     }
+  }
+
+  logout(): void {
+    console.log('dupa');
+    this.headerService.logout();
+    this.router.navigate(['/home']).then(() => {
+      window.location.href = '/home';
+    });
   }
 }
