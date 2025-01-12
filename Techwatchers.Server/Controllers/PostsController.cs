@@ -16,7 +16,7 @@ namespace Techwatchers.Server.Controllers
 
         // GET: api/posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
         {
             //dodac var session=HttpContext.Session.GetId("SessionId");
             //cos takiego zeby sprawdzic czy user jest zalogowany
