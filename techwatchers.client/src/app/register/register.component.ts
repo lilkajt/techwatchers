@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RegisterService } from '../services/register/register.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent {
   isError: boolean = false;
   constructor( private registerService: RegisterService) { }
 
-  onSubmit(){
+  onSubmit(registerForm: NgForm){
 
     //podglad danych w konsoli
     console.log('Form submitted:', this.registerData);
@@ -36,6 +37,7 @@ export class RegisterComponent {
     this.registerService.register(this.registerData).subscribe(
       (response) => {
         console.log(response);
+        registerForm.resetForm();
         this.isError = false;
         this.message = response.message;
         // this.router.navigate(['/dashboard']);
