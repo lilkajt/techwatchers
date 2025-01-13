@@ -1,0 +1,26 @@
+<div *ngIf="posts().length === 0" class="container-lg main">
+  <div class="post border-bottom border-dark">
+      <div class="post rounded empty">
+          <div class="text-center">
+            <p class="fs-3 text">Nie ma jeszcze żadnych postów dodanych w tej kategorii</p>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div *ngFor="let post of posts()" class="container-lg main">
+  <div class="post border-bottom border-dark">
+      <div class="post rounded">
+          <div class="text-start">
+              <div class="d-flex gap-2">
+                  <p class="fs-5 text">{{ post.user.username }}</p>
+                  <p class="fs-5 text">•</p>
+                  <p class="fs-5 text">{{ post.dateCreation | date:'short' }}</p>
+              </div>
+              <p class="fs-6 text">{{ post.category.name }}</p>
+              <p class="fs-1 text">{{ post.title }}</p>
+              <p class="fs-6 text">{{ post.description }}</p>
+          </div>
+      </div>
+  </div>
+</div>
