@@ -19,7 +19,7 @@
                         <i class="fa-regular fa-square-caret-down m-2"></i>
                     </button>
                     <div class="collapse" id="forumNav">
-                        <ul class="navbar-nav ms-auto">
+                        <ul class="navbar-nav ms-auto rounded border">
                             <li *ngFor="let category of categories()">
                                 <a class="dropdown-item rounded px-2 py-1" [routerLink]="['/forum', category.name]">{{ category.name }}</a>
                             </li>
@@ -41,7 +41,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <button type="button" class="btn btn-primary" routerLink="/login">Logowanie</button>
+                    <button type="button" class="btn btn-success" routerLink="/login">Logowanie</button>
                 </li>
                 <li class="nav-item">
                     <button type="button" class="btn btn-success" routerLink="/register">Rejestracja</button>

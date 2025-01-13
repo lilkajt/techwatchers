@@ -80,6 +80,10 @@ ul .dropdown-menu{
     transition: opacity 0.4s ease, visibility 0s ease 0s;
 }
 
+.dropdown-item{
+    background: var(--background-color);
+}
+
 .dropdown-item:hover{
     background: var(--secondary-color);
 }
