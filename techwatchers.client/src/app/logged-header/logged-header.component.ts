@@ -21,7 +21,7 @@ export class LoggedHeaderComponent {
   isError: boolean = false;
   message: string = '';
   postForm: FormGroup;
-  userId: number = 1; //normaly download from session user id 
+  userId: number = -1;
   categories = signal<Category[]>([]);
 
   constructor(private fb:FormBuilder, private headerService: HeaderService){

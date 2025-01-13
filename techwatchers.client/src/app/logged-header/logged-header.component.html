@@ -21,17 +21,17 @@
                     <div class="collapse" id="forumNav">
                         <ul class="navbar-nav ms-auto">
                             <li *ngFor="let category of categories()">
-                                <a class="dropdown-item rounded px-2 py-1" [routerLink]="['/forum', category.id]">{{ category.name }}</a>
+                                <a class="dropdown-item rounded px-2 py-1" [routerLink]="['/forum', category.name]">{{ category.name }}</a>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item d-none d-lg-block">
                     <div class="dropdown">
-                        <a href="" class="nav-link">Forum</a>
+                        <a class="nav-link">Forum</a>
                         <ul class="dropdown-menu mt-2 d-flex flex-column">
                             <li *ngFor="let category of categories()">
-                                <a class="dropdown-item rounded" [routerLink]="['/forum', category.id]">{{ category.name }}</a>
+                                <a class="dropdown-item rounded" [routerLink]="['/forum', category.name]">{{ category.name }}</a>
                             </li>
                         </ul>
                     </div>
