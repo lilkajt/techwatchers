@@ -14,6 +14,12 @@
     background-color: #2E343B;
 }
 
+.navbar-toggler.forum:focus, .navbar-toggler.forum:active {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
 .logo {
     font-size: 24px;
     font-weight: bold;
