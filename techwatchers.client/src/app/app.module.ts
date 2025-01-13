@@ -13,6 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoggedHeaderComponent } from './logged-header/logged-header.component';
 import { ProfileComponent } from './profile/profile.component';
 import { InterceptorService } from './services/core/interceptor.service';
+import { ForumComponent } from './forum/forum.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { InterceptorService } from './services/core/interceptor.service';
     RegisterComponent,
     LoggedHeaderComponent,
     ProfileComponent,
+    ForumComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule,
