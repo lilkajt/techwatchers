@@ -10,7 +10,7 @@
 
 <div *ngFor="let post of posts()" class="container-lg main">
   <div class="post border-bottom border-dark">
-      <div class="post rounded">
+      <div class="post rounded" (click)="navigateToPost(post)">
           <div class="text-start">
               <div class="d-flex gap-2">
                   <p class="fs-5 text">{{ post.user.username }}</p>

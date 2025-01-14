@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Post } from '../models/post.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../services/post/post.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class ForumComponent implements OnInit {
   category!: string | null;
   posts = signal<Post[]>([]);
 
-  constructor(private route: ActivatedRoute, private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -28,5 +28,8 @@ export class ForumComponent implements OnInit {
     this.postService.getPostsByCategory(this.category!).subscribe(posts => {
       this.posts.set(posts);
     });
+  }
+  navigateToPost(post: Post): void {
+    this.router.navigate([`/forum/${post.category.name}`], { queryParams: { id: post.id } });
   }
 }
