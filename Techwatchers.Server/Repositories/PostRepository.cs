@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 public interface IPostRepository
 {
     Task<IEnumerable<Post>> GetPostsAsync();
+    Task<Post?> GetPostByIdAsync(int id);
 }
 
 public class PostRepository : IPostRepository
@@ -30,5 +31,12 @@ public class PostRepository : IPostRepository
             })
             .OrderByDescending(p => p.dateCreation)
             .ToListAsync();
+    }
+    public async Task<Post?> GetPostByIdAsync(int id)
+    {
+        return await _context.Posts
+            .Include(p => p.user)
+            .Include(p => p.category)
+            .FirstOrDefaultAsync(p => p.id == id);
     }
 }

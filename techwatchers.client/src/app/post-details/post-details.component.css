@@ -1,0 +1,32 @@
+.post{
+    padding: 10px;
+}
+
+div .text-center {
+    color: var(--text-color-white);
+}
+
+div .text-start {
+    color: var(--text-color-white);
+}
+.container-lg.main{
+    padding: 0;
+}
+
+@media (min-width: 992px) {
+    .post {
+        padding: 10px 0;
+    }
+    .post.rounded{
+        padding: 10px;
+    }
+    .container-lg.main{
+        width: 60%;
+    }
+}
+
+@media (min-width: 1320px) {
+    .container-lg.main{
+        width: 50%;
+    }
+}

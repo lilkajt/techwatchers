@@ -30,6 +30,6 @@ export class ForumComponent implements OnInit {
     });
   }
   navigateToPost(post: Post): void {
-    this.router.navigate([`/forum/${post.category.name}`], { queryParams: { id: post.id } });
+    this.router.navigate([`/forum/${post.category.name}/${post.id}`]);
   }
 }

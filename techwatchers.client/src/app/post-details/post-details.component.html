@@ -1,0 +1,19 @@
+<div *ngIf="message()">
+  <p class="text-danger text-center fs-1 pt-5">{{ message() }}</p>
+</div>
+<div *ngIf="post() && !message()" class="container-lg main pt-3">
+  <div class="post border-bottom border-dark ">
+    <div class="post rounded">
+      <div class="text-start">
+        <div class="d-flex gap-2">
+          <p class="fs-5">{{ post()?.user?.username }}</p>
+          <p class="fs-5">•</p>
+          <p class="fs-5">{{ post()?.dateCreation | date:'short' }}</p>
+        </div>
+        <p class="fs-6">{{ post()?.category?.name }}</p>
+        <p class="fs-1">{{ post()?.title }}</p>
+        <p class="fs-6">{{ post()?.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

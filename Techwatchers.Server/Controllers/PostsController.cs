@@ -30,5 +30,15 @@ namespace Techwatchers.Server.Controllers
 
             return Ok(posts);
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Post>> GetPostById(string id)
+        {
+            if (!int.TryParse(id, out int postId))
+            {
+                return BadRequest("Invalid post id");
+            }
+            var post = await _postRepository.GetPostByIdAsync(postId);
+            return Ok(post);
+        }
     }
 }
