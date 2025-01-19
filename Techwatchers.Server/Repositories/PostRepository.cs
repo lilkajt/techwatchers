@@ -6,6 +6,8 @@ public interface IPostRepository
     Task<Post?> GetPostByIdAsync(int id);
     Task AddLikeAsync(int postId);
     Task RemoveLikeAsync(int postId);
+    Task<IEnumerable<PostComment>> GetCommentsByPostIdAsync(int postId);
+    Task<PostComment> AddCommentAsync(int postId, int userId, string commentContent);
 }
 
 public class PostRepository : IPostRepository
@@ -70,5 +72,33 @@ public class PostRepository : IPostRepository
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<IEnumerable<PostComment>> GetCommentsByPostIdAsync(int postId)
+    {
+        IQueryable<PostComment> query = _context.PostComments
+            .Include(c => c.user)
+            .Where(c => c.post_id == postId)
+            .OrderByDescending(c => c.dateCreation);
+
+        var comments = await query.ToListAsync();
+        return comments;
+    }
+
+public async Task<PostComment> AddCommentAsync(int postId, int userId, string commentContent)
+{
+    var comment = new PostComment
+    {
+        post_id = postId,
+        user_id = userId,
+        comment_content = commentContent,
+        dateCreation = DateTime.UtcNow
+    };
+
+    _context.PostComments.Add(comment);
+    await _context.SaveChangesAsync();
+
+    return comment;
+}
+
 }
 

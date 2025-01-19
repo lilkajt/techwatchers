@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.service';
 import { Post } from '../../models/post.model';
+import { PostComment } from '../../models/post-comment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,14 @@ export class PostService {
 
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
+  }
+
+  getComments(postId: number): Observable<PostComment[]> {
+    return this.http.get<PostComment[]>(`${this.apiUrl}/${postId}/comments`)
+  }  
+  
+  addComment(postId: number, content: string): Observable<PostComment> {
+    return this.http.post<PostComment>(`${this.apiUrl}/${postId}/comments`, { comment_content: content });
   }
 
   toggleLike(postId: number, liked: boolean) {

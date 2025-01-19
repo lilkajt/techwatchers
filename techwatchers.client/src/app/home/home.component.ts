@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { PostService } from '../services/post/post.service';  // Zakładam, że masz post.service.ts w tej samej lokalizacji
+import { PostService } from '../services/post/post.service';
 import { Post } from '../models/post.model';
 import { AppService } from '../services/app/app.service';
 import { Router } from '@angular/router';

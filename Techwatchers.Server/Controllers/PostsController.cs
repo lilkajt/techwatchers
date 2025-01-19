@@ -107,10 +107,33 @@ namespace Techwatchers.Server.Controllers
                 return StatusCode(500, new { message = "Wystąpił błąd podczas aktualizacji stanu lajków." });
             }
         }
+
+        [HttpGet("{id}/comments")]
+        public async Task<ActionResult<IEnumerable<PostComment>>> GetComments(int id)
+        {
+            var comments = await _postRepository.GetCommentsByPostIdAsync(id);
+            return Ok(comments);
+        }
+
+        [HttpPost("{id}/comments")]
+        public async Task<IActionResult> AddComment(int id, [FromBody] AddCommentRequest request)
+        {
+            var userId = HttpContext.Session.GetInt32("id");
+            if (userId == null)
+                return Unauthorized(new { message = "User not logged in" });
+
+            var comment = await _postRepository.AddCommentAsync(id, userId.Value, request.comment_content);
+            return Ok(comment);
+        }
     }
 
     public class ToggleLikeRequest
     {
         public bool Liked { get; set; }
+    }
+
+    public class AddCommentRequest
+    {
+        public string comment_content { get; set; }
     }
 }
