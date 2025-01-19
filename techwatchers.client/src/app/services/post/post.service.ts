@@ -29,5 +29,9 @@ export class PostService {
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
   }
+
+  toggleLike(postId: number, liked: boolean) {
+    return this.http.post(`${this.apiUrl}/${postId}/toggle-like`, { liked });
+  }
   
 }

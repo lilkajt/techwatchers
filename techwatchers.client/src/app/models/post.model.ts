@@ -3,6 +3,8 @@ export interface Post {
     title: string;
     description: string;
     dateCreation: string;
+    likes: number;
+    likedByUser: boolean;
     user: {
       username: string;
     };

@@ -1,19 +1,59 @@
 <div *ngIf="message()">
   <p class="text-danger text-center fs-1 pt-5">{{ message() }}</p>
 </div>
+
 <div *ngIf="post() && !message()" class="container-lg main pt-3">
-  <div class="post border-bottom border-dark ">
-    <div class="post rounded">
-      <div class="text-start">
-        <div class="d-flex gap-2">
-          <p class="fs-5">{{ post()?.user?.username }}</p>
-          <p class="fs-5">•</p>
-          <p class="fs-5">{{ post()?.dateCreation | date:'short' }}</p>
-        </div>
-        <p class="fs-6">{{ post()?.category?.name }}</p>
-        <p class="fs-1">{{ post()?.title }}</p>
-        <p class="fs-6">{{ post()?.description }}</p>
+  <!-- Post -->
+  <div class="post border-bottom border-dark rounded shadow">
+    <!-- Nagłówek -->
+    <div class="post-header d-flex justify-content-between align-items-center">
+      <div class="d-flex gap-2 align-items-center">
+        <p class="username fs-5 fw-bold">{{ post()?.user?.username }}</p>
+        <span class="separator"></span>
+        <p class="date fs-6">{{ post()?.dateCreation | date: 'dd.MM.yyyy HH:mm' }}</p>
       </div>
+      <p class="category fs-6 rounded-pill px-3 py-1">{{ post()?.category?.name }}</p>
+    </div>
+
+    <!-- Treść -->
+    <div class="post-body mt-3">
+      <h1 class="title fs-2 fw-bold text-white">{{ post()?.title }}</h1>
+      <p class="description fs-6 text-muted">{{ post()?.description }}</p>
+    </div>
+
+    <!-- Polubienia -->
+    <div class="post-footer d-flex justify-content-between align-items-center mt-3">
+      <div class="likes d-flex align-items-center gap-2">
+        <button class="like-button" (click)="toggleLike()">
+          <i 
+            class="fas fa-heart" 
+            [class.liked]="post()?.likedByUser" 
+            [class.not-liked]="!post()?.likedByUser">
+          </i>
+        </button>
+        <span>{{ post()?.likes || 0 }} polubień</span>
+      </div>
+    </div>
+    
+    
+  </div>
+
+  <!-- Sekcja komentarzy -->
+  <div class="comments-section mt-4 p-4 rounded shadow">
+    <h2 class="fs-4 text-white mb-3">Komentarze</h2>
+    <div class="comment border-top pt-3">
+      <p class="comment-author fw-bold text-primary">username</p>
+      <p class="comment-text text-white">content</p>
+    </div>
+
+    <!-- Formularz dodawania komentarzy -->
+    <div class="add-comment mt-4">
+      <textarea
+        class="form-control"
+        placeholder="Dodaj komentarz..."
+        rows="3"
+      ></textarea>
+      <button class="btn btn-success mt-2" >Dodaj</button>
     </div>
   </div>
 </div>

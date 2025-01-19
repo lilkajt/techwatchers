@@ -8,10 +8,15 @@ namespace Techwatchers.Server.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
+        private readonly ILoginRepository _loginRepository;
+        private IHttpContextAccessor _httpContextAccessor;
 
-        public PostsController(IPostRepository postRepository)
+
+        public PostsController(IPostRepository postRepository, ILoginRepository loginRepository, IHttpContextAccessor httpContextAccessor)
         {
             _postRepository = postRepository;
+            _loginRepository = loginRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: api/posts
@@ -50,5 +55,59 @@ namespace Techwatchers.Server.Controllers
             var post = await _postRepository.GetPostByIdAsync(postId);
             return Ok(post);
         }
+
+        [HttpPost("{id}/toggle-like")]
+        public async Task<IActionResult> ToggleLike(int id, [FromBody] ToggleLikeRequest request)
+        {
+            try
+            {
+                var session = _httpContextAccessor.HttpContext.Session;
+
+                var userId = session.GetInt32("id");
+
+                Console.WriteLine(userId);
+                
+                Console.WriteLine(userId);
+                if (userId.Equals(null))
+                {
+                    return Unauthorized(new { message = "User not logged in" });
+                }
+
+                var user = await _loginRepository.GetUserByIdAsync(userId.Value);
+                if (user == null)
+                {
+                    return Unauthorized(new { message = "Invalid user" });
+                }
+
+                // Pobierz post
+                var post = await _postRepository.GetPostByIdAsync(id);
+                if (post == null)
+                {
+                    return NotFound(new { message = "Post not found" });
+                }
+
+                // Zmień stan lajka
+                if (request.Liked)
+                {
+                    await _postRepository.AddLikeAsync(post.id);
+                }
+                else
+                {
+                    await _postRepository.RemoveLikeAsync(post.id);
+                }
+
+                return Ok(new { message = "Like state updated successfully" });
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in ToggleLike: {ex.Message}");
+                return StatusCode(500, new { message = "Wystąpił błąd podczas aktualizacji stanu lajków." });
+            }
+        }
+    }
+
+    public class ToggleLikeRequest
+    {
+        public bool Liked { get; set; }
+    }
 }

@@ -38,4 +38,30 @@ export class PostDetailsComponent {
         });
     });
   }
+  toggleLike(): void {
+    const currentPost = this.post();
+    if (!currentPost) return;
+
+    if (currentPost.likedByUser) {
+      currentPost.likes--;
+    } else {
+      currentPost.likes++;
+    }
+    currentPost.likedByUser = !currentPost.likedByUser;
+
+    this.post.set(currentPost);
+
+    this.postService.toggleLike(currentPost.id, currentPost.likedByUser).subscribe(
+      () => {
+        console.log('Like state updated successfully');
+      },
+      error => {
+        console.error('Error updating like state:', error);
+        // Przywróć poprzedni stan w przypadku błędu
+        currentPost.likedByUser = !currentPost.likedByUser;
+        currentPost.likedByUser ? currentPost.likes++ : currentPost.likes--;
+        this.post.set(currentPost);
+      }
+    );
+  }
 }

@@ -1,4 +1,4 @@
-.post{
+/* .post{
     padding: 10px;
 }
 .post.rounded:hover{
@@ -11,7 +11,154 @@ div .text-center {
 .post.rounded.empty:hover{
     cursor:default;
     background-color: var(--secondary-color);
+} */
+/* Ogólne stylizacje dla postów */
+.post {
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background-color: var(--background-color-primary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
+
+.post:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  background-color: var(--secondary-color-light);
+}
+
+/* Stylizacja zawartości posta */
+.post-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nagłówek posta */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.post-user-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.post-stats {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.post-stats i {
+  font-size: 16px;
+  color: red;
+}
+
+.likes-count {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
+.username {
+  font-weight: bold;
+  color: var(--text-color-white);
+}
+
+.separator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  margin: 5px 5px 20px;
+  animation: pulse 1.5s infinite;
+  vertical-align: middle;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+
+
+.date {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.category {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-color-white);
+  text-transform: uppercase;
+}
+
+/* Ciało posta */
+.post-body {
+  margin-top: 10px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  color: var(--green-color);
+  font-weight: 700;
+}
+
+.description {
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Efekty interakcji */
+.post:hover .category {
+  background-color: var(--text-color-highlight);
+  color: var(--green-color);
+}
+
+
+/* Responsywność */
+@media (min-width: 992px) {
+  .post {
+    padding: 25px;
+  }
+
+  .post:hover {
+    transform: translateY(-5px);
+  }
+
+  .category {
+    font-size: 14px;
+  }
+}
+
 div .text-start {
     color: var(--text-color-white);
 }

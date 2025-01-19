@@ -5,6 +5,7 @@ public class Post
     public string title { get; set; }
     public int category_id { get; set; }
     public string description { get; set; }
+    public int likes { get; set; } = 0;
     public DateTime dateCreation { get; set; }
     public User user { get; set; }
     public Category category { get; set; }

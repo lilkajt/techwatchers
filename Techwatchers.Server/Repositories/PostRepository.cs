@@ -4,6 +4,8 @@ public interface IPostRepository
 {
     Task<(IEnumerable<Post> posts, int totalCount)> GetPostsAsync(int page, int pageSize);
     Task<Post?> GetPostByIdAsync(int id);
+    Task AddLikeAsync(int postId);
+    Task RemoveLikeAsync(int postId);
 }
 
 public class PostRepository : IPostRepository
@@ -17,16 +19,14 @@ public class PostRepository : IPostRepository
 
     public async Task<(IEnumerable<Post> posts, int totalCount)> GetPostsAsync(int page, int pageSize)
     {
-        // Pobierz całkowitą liczbę postów (do wyświetlenia w paginacji)
         int totalCount = await _context.Posts.CountAsync();
 
-        // Zastosuj paginację
         var posts = await _context.Posts
             .Include(p => p.user)
             .Include(p => p.category)
-            .OrderByDescending(p => p.dateCreation) // Sortuj od najnowszych
-            .Skip((page - 1) * pageSize) // Pomijamy elementy z poprzednich stron
-            .Take(pageSize) // Pobieramy określoną liczbę elementów
+            .OrderByDescending(p => p.dateCreation)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(p => new Post
             {
                 id = p.id,
@@ -34,13 +34,14 @@ public class PostRepository : IPostRepository
                 description = p.description,
                 dateCreation = p.dateCreation,
                 user = p.user,
-                category = p.category
+                category = p.category,
+                likes = p.likes
             })
             .ToListAsync();
 
-        // Zwróć posty oraz całkowitą liczbę elementów
         return (posts, totalCount);
     }
+
     public async Task<Post?> GetPostByIdAsync(int id)
     {
         return await _context.Posts
@@ -48,4 +49,34 @@ public class PostRepository : IPostRepository
             .Include(p => p.category)
             .FirstOrDefaultAsync(p => p.id == id);
     }
+
+    public async Task AddLikeAsync(int postId)
+    {
+        var post = await _context.Posts.FirstOrDefaultAsync(p => p.id == postId);
+
+        if (post == null)
+        {
+            throw new ArgumentException("Post not found");
+        }
+
+        post.likes++;
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveLikeAsync(int postId)
+    {
+        var post = await _context.Posts.FirstOrDefaultAsync(p => p.id == postId);
+
+        if (post == null)
+        {
+            throw new ArgumentException("Post not found");
+        }
+
+        if (post.likes > 0)
+        {
+            post.likes--;
+            await _context.SaveChangesAsync();
+        }
+    }
 }
+
