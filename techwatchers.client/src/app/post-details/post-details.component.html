@@ -77,11 +77,13 @@
 
       <div class="comments-section p-4 rounded shadow">
         <h2 class="fs-4 text-white mb-3">Komentarze</h2>
-        <div *ngFor="let comment of comments()" class="comment border-top pt-3">
-          <p class="comment-author fw-bold text-primary">{{ comment.user.username }}</p>
-          <p class="comment-text text-white">{{ comment.comment_content }}</p>
-          <p class="comment-date text-white small">{{ comment.dateCreation | date: 'dd.MM.yyyy HH:mm' }}</p>
-        </div>
+          <div *ngFor="let comment of comments()" class="comment border-top pt-3 d-flex justify-content-between align-items-center">
+            <div>
+              <p class="comment-author fw-bold text-primary m-0">{{ comment.user.username }}</p>
+              <p class="comment-text text-white">{{ comment.comment_content }}</p>
+            </div>
+            <p class="comment-date text-white small text-end m-0">{{ comment.dateCreation | date: 'dd.MM.yyyy HH:mm' }}</p>
+          </div>
         
       </div>
     </ng-template>
