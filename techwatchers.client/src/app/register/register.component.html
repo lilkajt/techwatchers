@@ -5,7 +5,7 @@
 <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 50vh;">
     <div class="card p-4 shadow" style="width: 25rem; border-radius: 10px;">
         <h2 class="text-center mb-4">Tworzenie konta</h2>
-        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
             <div class="mb-3">
                 <label for="username" class="form-label">Nazwa użytkownika</label>
                 <input type="text" class="form-control" id="username" placeholder="Wprowadź nazwę użytkownika" name="username"

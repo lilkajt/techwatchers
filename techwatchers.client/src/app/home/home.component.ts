@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { PostService } from '../services/post/post.service';  // Zakładam, że masz post.service.ts w tej samej lokalizacji
 import { Post } from '../models/post.model';
 import { AppService } from '../services/app/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent {
   pageSize = 5;
   totalPosts = 0;
 
-  constructor(private postService: PostService, private appService: AppService) { }
+  constructor(private postService: PostService, private appService: AppService, private router: Router) { }
 
   ngOnInit(): void {
     this.checkUserSession();
@@ -37,6 +38,9 @@ export class HomeComponent {
     this.appService.checkUser().subscribe(response => {
       this.isLoggedIn = response.isLoggedIn;
     });
+  }
+  navigateToPost(post: Post): void {
+    this.router.navigate([`/forum/${post.category.name}/${post.id}`]);
   }
 
   changePage(page: number): void {

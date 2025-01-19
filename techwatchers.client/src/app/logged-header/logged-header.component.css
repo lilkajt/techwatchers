@@ -14,6 +14,16 @@
     background-color: #2E343B;
 }
 
+.navbar-nav li:last-child {
+    border-bottom: none !important;
+}
+
+.navbar-toggler.forum:focus, .navbar-toggler.forum:active {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
 .logo {
     font-size: 24px;
     font-weight: bold;
@@ -72,6 +82,10 @@ ul .dropdown-menu{
     visibility: visible;
     opacity: 1;
     transition: opacity 0.4s ease, visibility 0s ease 0s;
+}
+
+.dropdown-item{
+    background: var(--background-color);
 }
 
 .dropdown-item:hover{

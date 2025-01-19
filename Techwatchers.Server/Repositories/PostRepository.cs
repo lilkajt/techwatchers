@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 public interface IPostRepository
 {
     Task<(IEnumerable<Post> posts, int totalCount)> GetPostsAsync(int page, int pageSize);
+    Task<Post?> GetPostByIdAsync(int id);
 }
 
 public class PostRepository : IPostRepository
@@ -39,5 +40,12 @@ public class PostRepository : IPostRepository
 
         // Zwróć posty oraz całkowitą liczbę elementów
         return (posts, totalCount);
+    }
+    public async Task<Post?> GetPostByIdAsync(int id)
+    {
+        return await _context.Posts
+            .Include(p => p.user)
+            .Include(p => p.category)
+            .FirstOrDefaultAsync(p => p.id == id);
     }
 }

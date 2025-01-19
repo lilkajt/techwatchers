@@ -1,0 +1,31 @@
+.post{
+    padding: 10px;
+}
+.post.rounded:hover{
+    cursor: pointer;
+    background-color: var(--secondary-color);
+}
+
+div .text-start {
+    color: var(--text-color-white);
+}
+
+div .text-center {
+    color: var(--text-color-white);
+}
+.post.rounded.empty:hover{
+    cursor:default;
+    background-color: var(--secondary-color);
+}
+.container-lg.main{
+    padding: 0;
+}
+
+@media (min-width: 992px) {
+    .post {
+        padding: 10px 0;
+    }
+    .post.rounded{
+        padding: 10px;
+    }
+}

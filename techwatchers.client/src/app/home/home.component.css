@@ -5,7 +5,13 @@
     cursor: pointer;
     background-color: var(--secondary-color);
 }
-
+div .text-center {
+    color: var(--text-color-white);
+}
+.post.rounded.empty:hover{
+    cursor:default;
+    background-color: var(--secondary-color);
+}
 div .text-start {
     color: var(--text-color-white);
 }

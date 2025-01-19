@@ -21,5 +21,13 @@ export class PostService {
       }
     });
   }
+
+  getPostsByCategory(category: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}?category=${category}`);
+  }
+
+  getPostById(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.apiUrl}/${id}`);
+  }
   
 }
