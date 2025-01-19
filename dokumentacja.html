@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techwatchers - Dokumentacja Techniczna</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Techwatchers - Dokumentacja Techniczna</h1>
+
+        <section>
+            <h2>Opis projektu</h2>
+            <p>Techwatchers to aplikacja webowa stworzona przy użyciu Angulara i ASP.NET Core. Projekt umożliwia użytkownikom rejestrację, logowanie, tworzenie postów oraz przeglądanie postów innych użytkowników.</p><p>Aplikacja posiada również funkcjonalność zarządzania profilem użytkownika. Przeglądanie, likowanie oraz komentowanie wybranych postów.</p>
+        </section>
+
+        <section>
+            <h2>Autorzy projektu</h2>
+            <ul>
+                <li>Dawid Gulczyński</li>
+                <li>Kajetan Szlenzak</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Specyfikacja technologii</h2>
+            <ul>
+                <li><strong>Frontend</strong>: Angular 19.0.4</li>
+                <li><strong>Backend</strong>: ASP.NET Core 8.0</li>
+                <li><strong>Baza danych</strong>: MySQL</li>
+                <li><strong>Inne</strong>: Bootstrap, jQuery</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Instrukcje pierwszego uruchomienia projektu</h2>
+            <ol>
+                <li>Pobierz i zainstaluj .NET w wersji 8.0 oraz Node.js.</li>
+                <li>Sklonuj repozytorium projektu.</li>
+                <li>Przejdź do katalogu <code>Techwatchers.Server</code> i uruchom polecenie:
+                    <pre><code>dotnet ef database update</code></pre>
+                </li>
+                <li>Przejdź do katalogu <code>techwatchers.client</code> i uruchom polecenie:
+                    <pre><code>npm i --force</code></pre>
+                </li>
+                <li>Przejdź z powrotem do katalogu <code>Techwatchers.Server</code> i uruchom backend oraz frontend jednocześnie:
+                    <pre><code>dotnet run</code></pre>
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Struktura projektu</h2>
+            <pre><code>
+        Techwatchers/
+        ├── Techwatchers.Server/
+        │   ├── Controllers/
+        │   ├── Helpers/
+        │   ├── Migrations/
+        │   ├── Models/
+        │   ├── Repositories/
+        │   ├── Properties/
+        │   ├── Program.cs
+        │   ├── Techwatchers.Server.csproj
+        │   ├── appsettings.json
+        │   ├── appsettings.Development.json
+        │   └── launchSettings.json
+        └── techwatchers.client/
+            ├── src/
+            │   ├── app/
+            │   ├── assets/
+            │   ├── environments/
+            │   ├── index.html
+            │   ├── main.ts
+            │   └── styles.css
+            ├── .editorconfig
+            ├── .gitignore
+            ├── angular.json
+            ├── package.json
+            ├── tsconfig.app.json
+            ├── tsconfig.json
+            ├── tsconfig.spec.json
+            └── techwatchers.client.esproj
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>Modele</h2>
+            
+            <h3>User</h3>
+            <p>Model użytkownika przechowuje informacje o zarejestrowanych użytkownikach.</p>
+            <ul>
+                <li><strong>id</strong>: int - unikalny identyfikator użytkownika</li>
+                <li><strong>username</strong>: string - nazwa użytkownika (max 50 znaków, tylko litery, cyfry i podkreślniki, min 3 znaki)</li>
+                <li><strong>email</strong>: string - adres email użytkownika (max 40 znaków, poprawny format email)</li>
+                <li><strong>password</strong>: string - hasło użytkownika (min 8 znaków, co najmniej 1 cyfra, 1 wielka litera, 1 znak specjalny)</li>
+                <li><strong>statute</strong>: bool - status użytkownika (musi być zaakceptowany)</li>
+            </ul>
+        
+            <h3>Post</h3>
+            <p>Model postu przechowuje informacje o postach tworzonych przez użytkowników.</p>
+            <ul>
+                <li><strong>id</strong>: int - unikalny identyfikator postu</li>
+                <li><strong>user_id</strong>: int - identyfikator użytkownika, który stworzył post</li>
+                <li><strong>title</strong>: string - tytuł postu (max 256 znaków, nie może być pusty)</li>
+                <li><strong>category_id</strong>: int - identyfikator kategorii postu (musi istnieć)</li>
+                <li><strong>description</strong>: string - opis postu (nie może być pusty)</li>
+                <li><strong>likes</strong>: int - liczba polubień postu (domyślnie 0)</li>
+                <li><strong>dateCreation</strong>: DateTime - data utworzenia postu (domyślnie aktualna data)</li>
+                <li><strong>user</strong>: User - użytkownik, który stworzył post</li>
+                <li><strong>category</strong>: Category - kategoria, do której należy post</li>
+            </ul>
+        
+            <h3>Category</h3>
+            <p>Model kategorii przechowuje informacje o kategoriach postów.</p>
+            <ul>
+                <li><strong>id</strong>: int - unikalny identyfikator kategorii</li>
+                <li><strong>name</strong>: string - nazwa kategorii (max 50 znaków)</li>
+            </ul>
+        
+            <h3>PostComment</h3>
+            <p>Model komentarza przechowuje informacje o komentarzach do postów.</p>
+            <ul>
+                <li><strong>id</strong>: int - unikalny identyfikator komentarza</li>
+                <li><strong>post_id</strong>: int - identyfikator postu, do którego należy komentarz</li>
+                <li><strong>user_id</strong>: int - identyfikator użytkownika, który dodał komentarz</li>
+                <li><strong>comment_content</strong>: string - treść komentarza (nie może być pusta)</li>
+                <li><strong>dateCreation</strong>: DateTime - data utworzenia komentarza (domyślnie aktualna data)</li>
+                <li><strong>post</strong>: Post - post, do którego należy komentarz</li>
+                <li><strong>user</strong>: User - użytkownik, który dodał komentarz</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Kontrolery</h2>
+        
+            <h3>LoginController</h3>
+            <ul>
+                <li><strong>Login</strong>: POST <code>/api/login</code></li>
+                <li><strong>Parametry</strong>: username, password</li>
+                <li><strong>Opis</strong>: Umożliwia użytkownikowi zalogowanie się do systemu.</li>
+                <li><strong>Zwracane dane</strong>: Token autoryzacyjny oraz dane użytkownika</li>
+            </ul>
+            <ul>
+                <li><strong>Logout</strong>: POST <code>/api/login/logout</code></li>
+                <li><strong>Parametry</strong>: Brak</li>
+                <li><strong>Opis</strong>: Umożliwia użytkownikowi wylogowanie się z systemu.</li>
+                <li><strong>Zwracane dane</strong>: Informacja o powodzeniu operacji</li>
+            </ul>
+        
+            <h3>RegisterController</h3>
+            <ul>
+                <li><strong>Register</strong>: POST <code>/api/register</code></li>
+                <li><strong>Parametry</strong>: username, email, password, repeatPassword, statute</li>
+                <li><strong>Opis</strong>: Umożliwia użytkownikowi rejestrację w systemie.</li>
+                <li><strong>Zwracane dane</strong>: Informacja o powodzeniu rejestracji</li>
+            </ul>
+        
+            <h3>HeaderController</h3>
+            <ul>
+                <li><strong>GetCategories</strong>: GET <code>/api/header</code></li>
+                <li><strong>Parametry</strong>: Brak</li>
+                <li><strong>Opis</strong>: Zwraca listę wszystkich kategorii.</li>
+                <li><strong>Zwracane dane</strong>: Lista kategorii</li>
+            </ul>
+            <ul>
+                <li><strong>AddPostAsync</strong>: POST <code>/api/header</code></li>
+                <li><strong>Parametry</strong>: title, description, category_id, user_id</li>
+                <li><strong>Opis</strong>: Umożliwia użytkownikowi stworzenie nowego postu.</li>
+                <li><strong>Zwracane dane</strong>: Informacja o powodzeniu operacji</li>
+            </ul>
+        
+            <h3>PostsController</h3>
+            <ul>
+                <li><strong>GetPosts</strong>: GET <code>/api/posts</code></li>
+                <li><strong>Parametry</strong>: page, pageSize, category (opcjonalnie)</li>
+                <li><strong>Opis</strong>: Zwraca listę wszystkich postów z możliwością paginacji i filtrowania po kategorii.</li>
+                <li><strong>Zwracane dane</strong>: Lista postów oraz całkowita liczba postów</li>
+            </ul>
+            <ul>
+                <li><strong>ToggleLike</strong>: POST <code>/api/posts/{id}/toggle-like</code></li>
+                <li><strong>Parametry</strong>: id, Liked (bool)</li>
+                <li><strong>Opis</strong>: Umożliwia użytkownikowi polubienie lub usunięcie polubienia postu.</li>
+                <li><strong>Zwracane dane</strong>: Informacja o powodzeniu operacji</li>
+            </ul>
+        
+            <h3>ProfileController</h3>
+            <ul>
+                <li><strong>UpdatePassword</strong>: POST <code>/api/profile/update-password</code></li>
+                <li><strong>Parametry</strong>: userId, currentPassword, newPassword</li>
+                <li><strong>Opis</strong>: Umożliwia użytkownikowi zaktualizowanie hasła.</li>
+                <li><strong>Zwracane dane</strong>: Informacja o powodzeniu operacji</li>
+            </ul>
+            <ul>
+                <li><strong>GetCurrentUser</strong>: GET <code>/api/profile/current-user</code></li>
+                <li><strong>Parametry</strong>: Brak</li>
+                <li><strong>Opis</strong>: Zwraca informacje o aktualnie zalogowanym użytkowniku.</li>
+                <li><strong>Zwracane dane</strong>: Informacje o użytkowniku</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>System użytkowników</h2>
+            <p>W systemie funkcjonują dwie role użytkowników: gość i zalogowany użytkownik.</p>
+            <ul>
+                <li><strong>Gość</strong>: Może jedynie przeglądać posty użytkowników.</li>
+                <li><strong>Zalogowany użytkownik</strong>: Może dodawać posty, likować, komentować oraz aktualizować swoje hasło.</li>
+            </ul>
+        
+            <h3>Nadawanie ról użytkownikom</h3>
+            <p>Role użytkownikom są nadawane automatycznie podczas rejestracji. Każdy nowy użytkownik staje się zalogowanym użytkownikiem.</p>
+        
+            <h3>Możliwości użytkowników</h3>
+            <ul>
+                <li><strong>Gość</strong>: Przeglądanie postów.</li>
+                <li><strong>Zalogowany użytkownik</strong>: Dodawanie postów, likowanie, komentowanie, aktualizowanie swojego hasła.</li>
+            </ul>
+        
+            <h3>Informacje powiązane z użytkownikiem</h3>
+            <ul>
+                <li>Posty użytkownika</li>
+                <li>Profil użytkownika</li>
+                <li>Komentarze użytkownika</li>
+                <li>Likowane posty użytkownika</li>
+            </ul>
+        
+            <h3>Informacje globalne</h3>
+            <ul>
+                <li>Kategorie postów</li>
+                <li>Lista wszystkich postów</li>
+                <li>Komentarze</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Najciekawsze funkcjonalności</h2>
+            <ul>
+                <li><strong>Zaawansowana walidacja formularzy</strong>: Formularze rejestracji, logowania i aktualizacji hasła posiadają zaawansowaną walidację, która sprawdza poprawność danych wprowadzanych przez użytkowników.</li>
+                <li><strong>Responsywny interfejs użytkownika</strong>: Aplikacja jest w pełni responsywna, co oznacza, że działa poprawnie na różnych urządzeniach, w tym na komputerach, tabletach i smartfonach.</li>
+                <li><strong>Bezpieczne hashowanie haseł</strong>: Hasła użytkowników są hashowane przy użyciu bezpiecznych algorytmów, co zapewnia wysoki poziom bezpieczeństwa danych użytkowników.</li>
+                <li><strong>Potwierdzenie dodania posta</strong>: Użytkownik podczas dodania posta dostaje potwierdzenie dodanego posta za pomocą popupa.</li>
+                <li><strong>Filtrowanie i sortowanie postów</strong>: Użytkownicy mogą filtrować i sortować posty według kategorii.</li>
+                <li><strong>Dynamiczne ładowanie postów</strong>: Posty są ładowane dynamicznie z serwera, co pozwala na bieżąco aktualizować listę postów bez konieczności odświeżania strony.</li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>
