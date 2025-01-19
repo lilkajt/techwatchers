@@ -21,7 +21,7 @@ namespace Techwatchers.Server.Controllers
 
         // GET: api/posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 5, string? category = null)
         {
             //dodac var session=HttpContext.Session.GetId("SessionId");
             //cos takiego zeby sprawdzic czy user jest zalogowany
@@ -32,6 +32,11 @@ namespace Techwatchers.Server.Controllers
             try
             {
                 var (posts, totalCount) = await _postRepository.GetPostsAsync(page, pageSize);
+
+                if (!string.IsNullOrEmpty(category))
+                {
+                    posts = posts.Where(p => p.category.name.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
 
                 return Ok(new
                 {
@@ -79,14 +84,12 @@ namespace Techwatchers.Server.Controllers
                     return Unauthorized(new { message = "Invalid user" });
                 }
 
-                // Pobierz post
                 var post = await _postRepository.GetPostByIdAsync(id);
                 if (post == null)
                 {
                     return NotFound(new { message = "Post not found" });
                 }
 
-                // Zmień stan lajka
                 if (request.Liked)
                 {
                     await _postRepository.AddLikeAsync(post.id);

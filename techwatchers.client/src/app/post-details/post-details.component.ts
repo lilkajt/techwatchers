@@ -2,6 +2,8 @@ import { Component, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../services/post/post.service';
 import { Post } from '../models/post.model';
+import { Subscription } from 'rxjs';
+import { AppService } from '../services/app/app.service';
 
 @Component({
   selector: 'app-post-details',
@@ -11,9 +13,13 @@ import { Post } from '../models/post.model';
   styleUrl: './post-details.component.css'
 })
 export class PostDetailsComponent {
+  isLoggedIn = false;
+  private subscription: Subscription = new Subscription();
+
   post = signal<Post | null>(null);
   message = signal<string | null>(null);
-  constructor(private route: ActivatedRoute, private postService: PostService) { }
+
+  constructor(private route: ActivatedRoute, private postService: PostService, private appService: AppService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -36,7 +42,13 @@ export class PostDetailsComponent {
         error => {
           this.message.set('Error loading post');
         });
-    });
+      });
+
+      this.subscription = this.appService.isLoggedIn$.subscribe(isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
+      });
+  
+      this.checkUserSession();
   }
   toggleLike(): void {
     const currentPost = this.post();
@@ -61,6 +73,18 @@ export class PostDetailsComponent {
         currentPost.likedByUser = !currentPost.likedByUser;
         currentPost.likedByUser ? currentPost.likes++ : currentPost.likes--;
         this.post.set(currentPost);
+      }
+    );
+  }
+
+  checkUserSession() {
+    this.appService.checkUser().subscribe(
+      response => {
+        const isLoggedIn = response.isLoggedIn;
+        this.appService.updateUserStatus(isLoggedIn);
+      },
+      error => {
+        console.error('Error checking user session:', error);
       }
     );
   }

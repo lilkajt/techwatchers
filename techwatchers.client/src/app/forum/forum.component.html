@@ -2,25 +2,43 @@
   <div class="post border-bottom border-dark">
       <div class="post rounded empty">
           <div class="text-center">
-            <p class="fs-3 text">Nie ma jeszcze żadnych postów dodanych w tej kategorii</p>
+            <p class="fs-3 text">Nie ma jeszcze żadnych postów dodanych</p>
           </div>
       </div>
   </div>
 </div>
 
 <div *ngFor="let post of posts()" class="container-lg main">
-  <div class="post border-bottom border-dark">
-      <div class="post rounded" (click)="navigateToPost(post)">
-          <div class="text-start">
-              <div class="d-flex gap-2">
-                  <p class="fs-5 text">{{ post.user.username }}</p>
-                  <p class="fs-5 text">•</p>
-                  <p class="fs-5 text">{{ post.dateCreation | date:'short' }}</p>
-              </div>
-              <p class="fs-6 text">{{ post.category.name }}</p>
-              <p class="fs-1 text">{{ post.title }}</p>
-              <p class="fs-6 text">{{ post.description }}</p>
-          </div>
+<div class="post border-bottom border-dark rounded" (click)="navigateToPost(post)">
+  <div class="post-content">
+    <!-- Header -->
+    <div class="post-header d-flex justify-content-between align-items-center">
+      <div class="post-user-info d-flex align-items-center gap-2">
+        <p class="username">{{ post.user.username }}</p>
+        <span class="separator"></span>
+        <p class="date">{{ post.dateCreation | date: 'dd.MM.yyyy HH:mm' }}</p>
       </div>
+      <span class="category">{{ post.category.name }}</span>
+    </div>
+    <!-- Body -->
+    <div class="post-body">
+      <p class="title">{{ post.title }}</p>
+      <p class="description">{{ post.description }}</p>
+    </div>
+    <!-- Footer -->
+    <div class="post-footer d-flex justify-content-end align-items-center">
+      <div class="post-stats d-flex align-items-center gap-2">
+        <i class="fas fa-heart text-danger"></i>
+        <p class="likes-count mb-0">{{ post.likes || 0 }} polubień</p>
+      </div>
+    </div>
   </div>
+</div>
+</div>
+
+<!-- Paginacja -->
+<div class="pagination">
+  <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">Poprzednia</button>
+  <span>Strona {{ currentPage }} z {{ Math.ceil(totalPosts / pageSize) }}</span>
+  <button [disabled]="currentPage === Math.ceil(totalPosts / pageSize)" (click)="changePage(currentPage + 1)">Następna</button>
 </div>

@@ -15,6 +15,11 @@ export class ForumComponent implements OnInit {
   category!: string | null;
   posts = signal<Post[]>([]);
 
+  Math = Math;
+  currentPage = 1;
+  pageSize = 5;
+  totalPosts = 0;
+
   constructor(private route: ActivatedRoute, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
@@ -25,11 +30,17 @@ export class ForumComponent implements OnInit {
   }
 
   loadPosts(): void {
-    this.postService.getPostsByCategory(this.category!).subscribe(posts => {
-      this.posts.set(posts);
+    this.postService.getPostsByCategory(this.currentPage, this.pageSize, this.category!).subscribe(res => {
+      this.posts.set(res.posts);
+      this.totalPosts = res.totalCount
     });
   }
   navigateToPost(post: Post): void {
     this.router.navigate([`/forum/${post.category.name}/${post.id}`]);
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.loadPosts();
   }
 }
