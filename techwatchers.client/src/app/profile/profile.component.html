@@ -3,7 +3,6 @@
         <h2 class="text-center mb-4 fs-1">Cześć {{ userName }}!</h2>
         <span class="text-center mb-3 fs-5">edytuj swój profil</span>
         <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
-            <input type="hidden" [(ngModel)]="profileData.userId" name="userId">
             <div class="mb-3">
                 <label for="currentPassword" class="form-label">Obecne hasło</label>
                 <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" name="currentPassword"

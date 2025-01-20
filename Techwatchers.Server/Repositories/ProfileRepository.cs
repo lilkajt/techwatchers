@@ -2,8 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 public interface IProfileRepository
 {
-    User? GetUserById(int userId);
-    User? GetUserByUsername(string username);
+    User? GetUserById(int? userId);
     void UpdatePassword(User user, string newPassword);
 }
 
@@ -16,16 +15,10 @@ public class ProfileRepository : IProfileRepository
         _context = context;
     }
 
-    public User? GetUserById(int userId)
+    public User? GetUserById(int? userId)
     {
         return _context.Users.FirstOrDefault(u => u.id == userId);
     }
-
-    public User? GetUserByUsername(string username)
-    {
-        return _context.Users.FirstOrDefault(u => u.username == username);
-    }
-
     public void UpdatePassword(User user, string newPassword)
     {
         user.password = newPassword;

@@ -10,7 +10,7 @@ import { AppService } from '../services/app/app.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit{
-  profileData = { userId: 23, currentPassword: '', newPassword: '', repeatNewPassword: '' };
+  profileData = { currentPassword: '', newPassword: '', repeatNewPassword: '' };
   message: string = '';
   isError: boolean = false;
   userName: string = 'User';
