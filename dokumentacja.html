@@ -36,13 +36,20 @@
         <section>
             <h2>Instrukcje pierwszego uruchomienia projektu</h2>
             <ol>
-                <li>Pobierz i zainstaluj .NET w wersji 8.0 oraz Node.js.</li>
-                <li>Sklonuj repozytorium projektu.</li>
-                <li>Przejdź do katalogu <code>Techwatchers.Server</code> i uruchom polecenie:
-                    <pre><code>dotnet ef database update</code></pre>
+                <li>Pobierz i zainstaluj <a href="https://visualstudio.microsoft.com/pl/vs/community/" target="_blank" rel="noopener noreferrer">Visual studio 2022</a>. Instalujemy opcje ASP.NET i tworzenia aplikacji internetowych.</li>
+                <li>Pobierz i zainstaluj <a href="https://dotnet.microsoft.com/en-us/download" target="_blank" rel="noopener noreferrer">.NET w wersji 8.0</a>.</li>
+                <li>Pobierz i zainstaluj <a href="https://nodejs.org/en/download/current" target="_blank" rel="noopener noreferrer">Node.js wersja 20+</a>.</li>
+                <li>Pobierz i zainstaluj <a href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-microsoft-visual-c-redistributable-version" target="_blank" rel="noopener noreferrer">Visual studio 2019 Redistributable Version</a>.</li>
+                <li>Pobierz i zainstaluj <a href="https://dev.mysql.com/downloads/installer/" target="_blank" rel="noopener noreferrer">Mysql server</a>. Podczas instalacji ustawić domyślne hasło 'root'.</li>
+                <li>Zainstaluj <a href="https://learn.microsoft.com/pl-pl/ef/core/cli/dotnet#installing-the-tools" target="_blank" rel="noopener noreferrer">dotnet ef</a> wykonując polecenie w wierszu poleceń:
+                    <pre><code>dotnet tool install --global dotnet-ef</code></pre>
                 </li>
-                <li>Przejdź do katalogu <code>techwatchers.client</code> i uruchom polecenie:
-                    <pre><code>npm i --force</code></pre>
+                <li><a href="https://github.com/lilkajt/techwatchers" target="_blank" rel="noopener noreferrer">Sklonuj repozytorium projektu.</a></li>
+                <li>Przejdź do katalogu <code>techwatchers.client</code> i uruchom polecenie z uprawnieniami administratora:
+                    <pre><code>npm i </code></pre>
+                </li>
+                <li>Przejdź do katalogu <code>Techwatchers.Server</code> i uruchom polecenie z uprawnieniami administratora:
+                    <pre><code>dotnet ef database update</code></pre>
                 </li>
                 <li>Przejdź z powrotem do katalogu <code>Techwatchers.Server</code> i uruchom backend oraz frontend jednocześnie:
                     <pre><code>dotnet run</code></pre>
